@@ -6,7 +6,8 @@ import { Footer } from './components/Footer/Footer'
 const App: React.FC = () => {
   return (
     <>
-      <Header />
+      <Header itemName="鯉" numName={4} />
+      <Header itemName="鯖" numName={9} />
       <Footer />
     </>
   )
