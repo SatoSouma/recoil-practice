@@ -1,5 +1,11 @@
 import React from 'react'
-import { atomFamily, selector, useRecoilState, useRecoilValue } from 'recoil'
+import {
+  atomFamily,
+  selector,
+  SerializableParam,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil'
 
 type child = {
   itemName: string
@@ -8,15 +14,18 @@ type child = {
 
 //atomを動的に生成
 // atomFamily関数を使い関数を生成
-const itemStateFamily = atomFamily({ key: 'atomfamily', default: 0 })
-
-//atomと違う点としてdefaultを関数に出来る
-const numStateFamily = atomFamily({
+const itemStateFamily = atomFamily<number, SerializableParam>({
   key: 'atomfamily',
-  default: (i: number) => i * 5,
+  default: 0,
 })
 
-export const Header: React.FC<child> = ({ itemName, numName }) => {
+//atomと違う点としてdefaultを関数に出来る
+const numStateFamily = atomFamily<number, number>({
+  key: 'atomfamily',
+  default: (i) => i * 5,
+})
+
+export const AtomFamily: React.FC<child> = ({ itemName, numName }) => {
   //生成した関数に識別子を渡す
   const atom = itemStateFamily(itemName)
   const numAtom = numStateFamily(numName)

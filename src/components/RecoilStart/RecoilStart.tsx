@@ -2,23 +2,42 @@ import React from 'react'
 import { atom, selector, useRecoilState, useRecoilValue } from 'recoil'
 
 //state生成に必要なatom関数を使用
-const countState = atom<number>({
+export const countState = atom<number>({
   //ユニークキー
-  key: 'simple/counter',
+  key: 'simple-counter',
   //初期値
   default: 0,
 })
 
-//atomの値を加工するselector関数
-const reCountState = selector<number>({
+//state生成に必要なatom関数を使用
+export const messageState = atom<string>({
+  //ユニークキー
+  key: 'simple-message',
+  //初期値
+  default: 'こんにちは',
+})
+
+type stateType = {
+  count: number
+  message: string
+}
+
+//atomの値を加工するselector関数(複数のatomを組み合わせることも可)
+export const reCountState = selector<number>({
   //ユニークキー
   key: 'simple/reCounter',
   //atomで作ったstateを3倍に加工する
-  get: ({ get }) => get(countState) * 3,
-  set: ({ get, set }, newValue) => set(countState, newValue),
+  get: ({ get }) => {
+    return get(countState) * 3
+  },
+  set: ({ get, set }, newValue) => {
+    if (typeof newValue == 'number') {
+      set(countState, newValue)
+    }
+  },
 })
 
-export const Footer: React.FC = () => {
+export const RecoilStart: React.FC = () => {
   // useRecoilStateにぶち込む
   // 変数と関数を同時生成
   // const [count, setCount] = useRecoilState<number>(countState)
@@ -28,7 +47,7 @@ export const Footer: React.FC = () => {
   const count = useRecoilValue<number>(countState)
 
   //selectorで変数と関数を生成
-  const [reCount, setCount] = useRecoilState<number>(reCountState)
+  const [reCount, setCount] = useRecoilState(reCountState)
 
   return (
     <>

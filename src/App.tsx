@@ -1,14 +1,16 @@
 import './App.css'
 import React from 'react'
-import { Header } from './components/Header/Header'
-import { Footer } from './components/Footer/Footer'
+import { AtomFamily } from './components/AtomFamily/AtomFamily'
+import { RecoilStart } from './components/RecoilStart/RecoilStart'
+import { StateCall } from './components/StateCall/StateCall'
 
 const App: React.FC = () => {
   return (
     <>
-      <Header itemName="鯉" numName={4} />
-      <Header itemName="鯖" numName={9} />
-      <Footer />
+      <AtomFamily itemName="鯉" numName={4} />
+      <AtomFamily itemName="鯖" numName={9} />
+      <StateCall />
+      <RecoilStart />
     </>
   )
 }
